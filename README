@@ -1,0 +1,12 @@
+
+Speed up your ASP .NET integration test-cases written using Selenium 2.0
+
+The provided base-class, BaseIntegrationTest, provides the following facilities to speed up your tests:
+ - Re-uses the Selenium web-driver across your all tests
+ - Preserves the login across tests if there is no need to re-login.
+ - Provides helper methods to save your typing and give your fingers a break!
+
+
+
+
+
