@@ -5,6 +5,50 @@ The provided base-class, BaseIntegrationTest, provides the following facilities 
  - Preserves the login across tests if there is no need to re-login.
  - Provides helper methods to save your typing and give your fingers a break!
 
+Here is an example of a test class that inherits from BaseIntegrationTest:
+
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+ 
+namespace Web.UI.Tests
+{
+    [TestClass]
+    public class FillFormIntegrationTest : BaseIntegrationTest
+    {
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
+        {
+           ClassInitialize(Logins.UserOne);
+        }
+ 
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            BaseIntegrationTest.ClassCleanup();
+        }
+ 
+        [TestMethod]
+        public void CanFillAndSubmitFormAfterLogin()
+        {
+            Open("~/FillOutForm.aspx"); 
+ 
+            Assert.AreEqual("Fill out form", driver.Title);
+ 
+            Type("firstName", "User");
+            Type("lastName", "One");
+            Type("address1", "99 Test Street");
+            Type("city", "Test City");
+            Type("state", "TX");
+ 
+            Click("btnSubmit");
+ 
+            AssertTextContains(By.CssSelector("confirm-label"), "Submission successful."); 
+        }
+    }
+}
+
 For further details, check-out my blog post: http://nizarnoorani.com/writing-integration-tests-for-asp-net-with-selenium-2-0-part-2
 
 
